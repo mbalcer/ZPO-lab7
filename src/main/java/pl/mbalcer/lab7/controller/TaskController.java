@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.mbalcer.lab7.dto.CreateTaskDTO;
 import pl.mbalcer.lab7.dto.TaskDTO;
+import pl.mbalcer.lab7.dto.UpdateTaskDTO;
 import pl.mbalcer.lab7.entity.Task;
 import pl.mbalcer.lab7.enumType.TaskStatus;
 import pl.mbalcer.lab7.enumType.TaskType;
@@ -25,12 +26,6 @@ public class TaskController {
     public TaskDTO getTask(@PathVariable long taskId) {
         Task task = taskService.getTask(taskId);
         return taskMapper.toDTO(task);
-    }
-
-    @PostMapping("/tasks")
-    public void createTask(@RequestBody CreateTaskDTO taskDTO) {
-        Task task = taskMapper.fromDTO(taskDTO);
-        taskService.createTask(task);
     }
 
     @GetMapping("/tasks/user/{userId}")
@@ -63,7 +58,7 @@ public class TaskController {
                 .filter(task -> task.getUser().getId()==userId)
                 .filter(task -> task.getType()==taskType)
                 .collect(Collectors.toList());
-        
+
         return taskMapper.toDTOs(tasks);
     }
 
@@ -79,5 +74,22 @@ public class TaskController {
                 .collect(Collectors.toList());
 
         return taskMapper.toDTOs(tasks);
+    }
+
+    @PostMapping("/tasks")
+    public void createTask(@RequestBody CreateTaskDTO taskDTO) {
+        Task task = taskMapper.fromDTO(taskDTO);
+        taskService.createTask(task);
+    }
+
+    @PutMapping("/tasks/{taskId}")
+    public void updateTask(@RequestBody UpdateTaskDTO taskDTO, @PathVariable long taskId) {
+        Task taskFromDb = taskService.getTask(taskId);
+        if (taskFromDb != null) {
+            Task task = taskMapper.fromDTO(taskDTO);
+            task.setId(taskId);
+            task.setUser(taskFromDb.getUser());
+            taskService.updateTask(task);
+        }
     }
 }

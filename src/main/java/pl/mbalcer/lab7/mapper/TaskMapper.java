@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import pl.mbalcer.lab7.dto.CreateTaskDTO;
 import pl.mbalcer.lab7.dto.CreateUserDTO;
 import pl.mbalcer.lab7.dto.TaskDTO;
+import pl.mbalcer.lab7.dto.UpdateTaskDTO;
 import pl.mbalcer.lab7.entity.Task;
 import pl.mbalcer.lab7.entity.User;
 import pl.mbalcer.lab7.service.UserService;
@@ -38,6 +39,16 @@ public class TaskMapper {
         task.setType(taskDTO.getType());
         task.setStatus(taskDTO.getStatus());
         task.setUser(userService.getUser(taskDTO.getUserId()));
+        return task;
+    }
+
+    public Task fromDTO(UpdateTaskDTO taskDTO) {
+        Task task = new Task();
+        task.setId(taskDTO.getId());
+        task.setTitle(taskDTO.getTitle());
+        task.setCreateDate(taskDTO.getCreateDate());
+        task.setType(taskDTO.getType());
+        task.setStatus(taskDTO.getStatus());
         return task;
     }
 }
