@@ -2,10 +2,7 @@ package pl.mbalcer.lab7.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pl.mbalcer.lab7.dto.CreateTaskDTO;
-import pl.mbalcer.lab7.dto.CreateUserDTO;
-import pl.mbalcer.lab7.dto.TaskDTO;
-import pl.mbalcer.lab7.dto.UpdateTaskDTO;
+import pl.mbalcer.lab7.dto.*;
 import pl.mbalcer.lab7.entity.Task;
 import pl.mbalcer.lab7.entity.User;
 import pl.mbalcer.lab7.service.UserService;
@@ -49,6 +46,13 @@ public class TaskMapper {
         task.setCreateDate(taskDTO.getCreateDate());
         task.setType(taskDTO.getType());
         task.setStatus(taskDTO.getStatus());
+        return task;
+    }
+
+    public Task fromDTO(UpdateTaskUserDTO taskDTO) {
+        Task task = new Task();
+        task.setId(taskDTO.getId());
+        task.setUser(taskDTO.getUser());
         return task;
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.mbalcer.lab7.dto.CreateTaskDTO;
 import pl.mbalcer.lab7.dto.TaskDTO;
 import pl.mbalcer.lab7.dto.UpdateTaskDTO;
+import pl.mbalcer.lab7.dto.UpdateTaskUserDTO;
 import pl.mbalcer.lab7.entity.Task;
 import pl.mbalcer.lab7.enumType.TaskStatus;
 import pl.mbalcer.lab7.enumType.TaskType;
@@ -92,4 +93,24 @@ public class TaskController {
             taskService.updateTask(task);
         }
     }
+
+    @PutMapping("/tasks/{taskId}/user")
+    public void updateTaskByUser(@RequestBody UpdateTaskUserDTO taskDTO, @PathVariable long taskId) {
+        Task taskFromDb = taskService.getTask(taskId);
+        if(taskFromDb != null) {
+            Task task = taskMapper.fromDTO(taskDTO);
+            task.setId(taskId);
+            task.setTitle(taskFromDb.getTitle());
+            task.setCreateDate(taskFromDb.getCreateDate());
+            task.setStatus(taskFromDb.getStatus());
+            task.setType(taskFromDb.getType());
+            taskService.updateTask(task);
+        }
+    }
+
+    @DeleteMapping("/tasks/{taskId}")
+    public void deleteTask(@PathVariable long taskId) {
+        taskService.deleteTask(taskId);
+    }
+
 }
