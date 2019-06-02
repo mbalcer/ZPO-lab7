@@ -2,10 +2,7 @@ package pl.mbalcer.lab7.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.mbalcer.lab7.dto.CreateTaskDTO;
-import pl.mbalcer.lab7.dto.TaskDTO;
-import pl.mbalcer.lab7.dto.UpdateTaskDTO;
-import pl.mbalcer.lab7.dto.UpdateTaskUserDTO;
+import pl.mbalcer.lab7.dto.*;
 import pl.mbalcer.lab7.entity.Task;
 import pl.mbalcer.lab7.enumType.TaskStatus;
 import pl.mbalcer.lab7.enumType.TaskType;
@@ -113,4 +110,19 @@ public class TaskController {
         taskService.deleteTask(taskId);
     }
 
+    @GetMapping("/tasks/sum")
+    public List<SumUserTasksDTO> sumUserTasks() {
+        return taskService.getTasks()
+                .stream()
+                .collect(Collectors.groupingBy(task->task.getUser()))
+                .entrySet()
+                .stream()
+                .map(task -> new SumUserTasksDTO(
+                            task.getKey(),
+                            task.getValue()
+                                .stream()
+                                .count()
+                ))
+                .collect(Collectors.toList());
+    }
 }
