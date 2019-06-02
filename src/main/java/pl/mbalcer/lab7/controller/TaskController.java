@@ -9,7 +9,10 @@ import pl.mbalcer.lab7.enumType.TaskType;
 import pl.mbalcer.lab7.mapper.TaskMapper;
 import pl.mbalcer.lab7.service.TaskService;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -19,6 +22,12 @@ public class TaskController {
     private TaskService taskService;
     @Autowired
     private TaskMapper taskMapper;
+
+    @GetMapping("/tasks")
+    public List<TaskDTO> getTasks() {
+        List<Task> tasks = taskService.getTasks();
+        return taskMapper.toDTOs(tasks);
+    }
 
     @GetMapping("/tasks/{taskId}")
     public TaskDTO getTask(@PathVariable long taskId) {
@@ -125,4 +134,19 @@ public class TaskController {
                 ))
                 .collect(Collectors.toList());
     }
+
+    @GetMapping("/tasks/date")
+    public Map<LocalDate, Long> getTasksByDate() {
+        return taskService.getTasks()
+                .stream()
+                .collect(Collectors.groupingBy(task -> task.getCreateDate()))
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        task -> task.getKey(),
+                        task -> task.getValue()
+                                    .stream()
+                                    .count()));
+    }
+
 }
