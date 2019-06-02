@@ -15,10 +15,12 @@ public class Task {
     private long id;
     private String title;
     private LocalDate createDate;
+    @Enumerated
     private TaskType type;
+    @Enumerated
     private TaskStatus status;
 
-    @OneToMany
+    @ManyToOne
     private User user;
 
     public Task(String title, LocalDate createDate, TaskType type, TaskStatus status, User user) {
