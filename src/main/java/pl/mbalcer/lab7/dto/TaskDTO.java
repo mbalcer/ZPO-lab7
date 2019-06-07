@@ -14,6 +14,9 @@ public class TaskDTO {
 
     private UserDTO user;
 
+    public TaskDTO() {
+    }
+
     public TaskDTO(long id, String title, LocalDate createDate, TaskStatus status, TaskType type, UserDTO user) {
         this.id = id;
         this.title = title;

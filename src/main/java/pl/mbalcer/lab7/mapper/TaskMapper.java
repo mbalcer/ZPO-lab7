@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.mbalcer.lab7.dto.*;
 import pl.mbalcer.lab7.entity.Task;
-import pl.mbalcer.lab7.entity.User;
 import pl.mbalcer.lab7.service.UserService;
 
 import java.util.List;
@@ -20,7 +19,8 @@ public class TaskMapper {
     private UserService userService;
 
     public TaskDTO toDTO(Task task) {
-        return new TaskDTO(task.getId(), task.getTitle(), task.getCreateDate(), task.getStatus(), task.getType(), userMapper.toDTO(task.getUser()));
+        return new TaskDTO(task.getId(), task.getTitle(), task.getCreateDate(), task.getStatus(),
+                task.getType(), userMapper.toDTO(task.getUser()));
     }
 
     public List<TaskDTO> toDTOs(List<Task> tasks) {

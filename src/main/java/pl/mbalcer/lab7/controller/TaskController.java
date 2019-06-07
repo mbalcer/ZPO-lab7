@@ -7,6 +7,7 @@ import pl.mbalcer.lab7.entity.Task;
 import pl.mbalcer.lab7.enumType.TaskStatus;
 import pl.mbalcer.lab7.enumType.TaskType;
 import pl.mbalcer.lab7.mapper.TaskMapper;
+import pl.mbalcer.lab7.repository.TaskRepository;
 import pl.mbalcer.lab7.service.TaskService;
 
 import java.time.LocalDate;

@@ -1,16 +1,10 @@
 package pl.mbalcer.lab7.dto;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import pl.mbalcer.lab7.entity.User;
 import pl.mbalcer.lab7.enumType.TaskStatus;
 import pl.mbalcer.lab7.enumType.TaskType;
-import pl.mbalcer.lab7.mapper.UserMapper;
-import pl.mbalcer.lab7.service.UserService;
 
 import java.time.LocalDate;
 
-@Component
 public class CreateTaskDTO {
 
     private String title;
@@ -19,9 +13,6 @@ public class CreateTaskDTO {
     private TaskStatus status;
 
     private long userId;
-
-    @Autowired
-    private UserService userService;
 
     public CreateTaskDTO() {
     }
